@@ -14,7 +14,7 @@ Use the Zurb Foundation-grid and block grid in all your posts, pages and custom 
 
 Adds support for using Zurb's Foundation grid-system via shortcodes in WordPress' TinyMCE editor.
 
-For more information about Foundation, please [read the docs][http://foundation.zurb.com/docs/ "Zurb Foundation"].
+For more information about Foundation, please [read the docs](http://foundation.zurb.com/docs/ "Zurb Foundation").
 
 This plugin is compatible with version 5 of Foundation, and includes support for small, medium and large breakpoints.
 
