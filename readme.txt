@@ -4,7 +4,7 @@ Donate link: http://tormorten.no/
 Tags: foundation, zurb, columns, grid
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 0.4
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Use the Zurb Foundation-grid in all your posts, pages and custom post types.
 
 Adds support for using Zurb's Foundation grid-system via shortcodes in WordPress' TinyMCE editor.
 
-For more information about Foundation, please [read the docs](http://foundation.zurb.com/docs/ "Zurb Foundation").
+For more information about Foundation, please [read the docs][http://foundation.zurb.com/docs/ "Zurb Foundation"].
 
 This plugin is compatible with version 5 of Foundation, and includes support for small, medium and large breakpoints.
 
@@ -47,8 +47,12 @@ Foundation Columns adds a row to posts where the shortcode is detected. I recomm
 
 == Changelog ==
 
+= 0.5 =
+* Added support for blog grids
+* Moved from prompt to popup
+
 = 0.4 =
-The first version of the plugin. 
+* The first version of the plugin. 
 
 == Upgrade Notice ==
 
