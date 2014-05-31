@@ -8,7 +8,7 @@ Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use the Zurb Foundation-grid in all your posts, pages and custom post types.
+Use the Zurb Foundation-grid and block grid in all your posts, pages and custom post types.
 
 == Description ==
 
@@ -17,6 +17,8 @@ Adds support for using Zurb's Foundation grid-system via shortcodes in WordPress
 For more information about Foundation, please [read the docs][http://foundation.zurb.com/docs/ "Zurb Foundation"].
 
 This plugin is compatible with version 5 of Foundation, and includes support for small, medium and large breakpoints.
+
+Now also with support for block grids.
 
 Please note: This plugin does not install Foundation for you and therefore require that you use a theme built on Foundation.
 
