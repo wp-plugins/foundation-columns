@@ -70,14 +70,16 @@ if( foundation_columns_requirements_met() ) {
 	 * @return 
 	 */
 
-	function plugin_textdomain() {
+	function foundation_columns_textdomain() {
 		
 		$domain = 'foundation_columns';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 		load_textdomain( $domain, WP_LANG_DIR.'/'.$domain.'/'.$domain.'-'.$locale.'.mo' );
 		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 			
-	} 
+	}
+
+	add_action( 'plugins_loaded', 'foundation_columns_textdomain' );
 
 	/**
 	 * Shortcode function for the main grid system
