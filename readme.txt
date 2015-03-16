@@ -3,8 +3,8 @@ Contributors: tormorten
 Donate link: http://tormorten.no/
 Tags: foundation, zurb, columns, grid
 Requires at least: 3.7
-Tested up to: 3.9.1
-Stable tag: 0.6
+Tested up to: 4.2
+Stable tag: 0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,7 +40,7 @@ If you don't want all the breakpoints you can just click "OK" while prompted for
 
 = Text that I don't put in columns are not aligned with rest of the site. =
 
-Prior to version 0.6 you should wrap all content with columns. 
+Foundation Columns adds a row to posts where the shortcode is detected. I recommend you put all your content in columns to make sure it gets the right padding.
 
 == Screenshots ==
 
@@ -49,12 +49,8 @@ Prior to version 0.6 you should wrap all content with columns.
 
 == Changelog ==
 
-= 0.6 =
-* Paragraphs with no [fc]-shortcode in front should now be wrapped with small-12 columns.
-* Should also fix bug reported by adambundy
-
 = 0.5 =
-* Added support for block grids
+* Added support for blog grids
 * Moved from prompt to popup
 
 = 0.4 =

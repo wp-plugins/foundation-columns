@@ -1,16 +1,20 @@
 <?php
-
+/**
+ * Foundation Columns WordPress Plugin
+ * 
+ * @package WordPress
+ **/
 /*
 Plugin Name: Foundation Columns
 Plugin URI: http://tormorten.no
 Description: Use the Zurb Foundation Grid System in WordPress posts and pages
-Version: 0.6
+Version: 0.7
 Author: Tor Morten Jensen
 Author URI: http://tormorten.no
 */
 
 /**
- * Copyright (c) 2014 Tor Morten Jensen. All rights reserved.
+ * Copyright (c) 2015 Tor Morten Jensen. All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -34,9 +38,19 @@ Author URI: http://tormorten.no
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Access denied.' );
 }
-
+/**
+ * The name of the plugin
+ **/
 define( 'FCOL_NAME',                 'Foundation Columns' );
+
+/**
+ * The minimum required PHP version
+ **/
 define( 'FCOL_REQUIRED_PHP_VERSION', '5' );
+
+/**
+ * The minimum required WordPress version
+ **/
 define( 'FCOL_REQUIRED_WP_VERSION',  '3.7' );
 
 /**
@@ -67,7 +81,7 @@ if( foundation_columns_requirements_met() ) {
 	/**
 	 * Localize the plugin
 	 *
-	 * @return 
+	 * @return void
 	 */
 
 	function foundation_columns_textdomain() {
@@ -84,7 +98,9 @@ if( foundation_columns_requirements_met() ) {
 	/**
 	 * Shortcode function for the main grid system
 	 *
-	 * @return string 
+	 * @param array|string $atts Shortcode attributes
+	 * @param string $content The content inside the shortcode
+	 * @return string Column Formatted
 	 */
 
 	function foundation_columns( $atts, $content = null ) {
@@ -110,7 +126,9 @@ if( foundation_columns_requirements_met() ) {
 	/**
 	 * Shortcode function for the block grid
 	 *
-	 * @return string 
+	 * @param array|string $atts Shortcode attributes
+	 * @param string $content The content inside the shortcode
+	 * @return string A block grid
 	 */
 
 	function foundation_columns_grid( $atts, $content = null ) {
@@ -136,7 +154,9 @@ if( foundation_columns_requirements_met() ) {
 	/**
 	 * Shortcode function for the block grid items
 	 *
-	 * @return string 
+	 * @param array|string $atts Shortcode attributes
+	 * @param string $content The content inside the shortcode
+	 * @return string A block grid item
 	 */
 
 	function foundation_columns_item( $atts, $content = null ) {
@@ -152,9 +172,33 @@ if( foundation_columns_requirements_met() ) {
 	add_shortcode( 'fc_item','foundation_columns_item' );
 
 	/**
+	 * Add a class to posts_class if shortcode is present
+	 *
+	 * @param array $classes An array of classes
+	 * @param string $class The current class
+	 * @param integer $post_id The post ID
+	 * @return array Modified classes 
+	 */
+
+	function foundation_columns_posts_class( $classes, $class, $post_id ) {
+		
+		$post = get_post($post_id);
+
+		if( has_shortcode( $post->post_content, 'fc' ) || has_shortcode( $post->post_content, 'fc_grid' ) ) {
+			$classes[] = 'has-foundation-columns';
+		}
+		
+		return $classes;
+
+	}
+
+	add_filter( 'post_class', 'foundation_columns_posts_class', 1, 3 );
+
+	/**
 	 * Filters the content and puts a row around if the [fc]-shortcode is present
 	 *
-	 * @return string
+	 * @param string $content The posts content
+	 * @return string Modified post content
 	 */
 
 	function foundation_columns_content($content) {
@@ -203,7 +247,7 @@ if( foundation_columns_requirements_met() ) {
 	/**
 	 * Add buttons to the TinyMCE-editor
 	 *
-	 * @return 
+	 * @return void
 	 */
 
 	function foundation_columns_buttonhooks() {
@@ -212,6 +256,13 @@ if( foundation_columns_requirements_met() ) {
 	    	add_filter('mce_buttons', 'foundation_columns_register_buttons');
 	    }
 	}
+
+	/**
+	 * Registers the buttons
+	 *
+	 * @param array $buttons All buttons
+	 * @return array All buttons
+	 */
 	 
 	function foundation_columns_register_buttons($buttons) {
 	   	array_push($buttons, "separator", "foundation_columns");
@@ -221,11 +272,13 @@ if( foundation_columns_requirements_met() ) {
 	/**
 	 * Adds the JavaScript used for the grid system in the editor
 	 *
-	 * @return array
+	 * @param array $plugin_array An array of tinyMCE plugins
+	 * @return array TinyMCE plugins
 	 */
 
 	function foundation_columns_register_tinymce_javascript($plugin_array) {
-	   	$plugin_array['foundation_columns'] = plugins_url('/foundation_columns.js',__file__);
+		$debug = defined('WP_DEBUG') ? WP_DEBUG : false;
+	   	$plugin_array['foundation_columns'] = plugins_url('/assets/js/foundation_columns'. ($debug ? '.min' : '') .'.js',__file__);
 	   	return $plugin_array;
 	}
 	 
@@ -234,11 +287,9 @@ if( foundation_columns_requirements_met() ) {
 	/**
 	 * Create an icon for the TinyMCE-menu
 	 *
-	 * @return 
+	 * @return void
 	 */
-
-	add_action( 'admin_head', 'foundation_columns_icon', 999 );
-
+	
 	function foundation_columns_icon() {
 
 		if( is_admin() ) {
@@ -246,7 +297,7 @@ if( foundation_columns_requirements_met() ) {
 			?>
 			<style type="text/css">
 			.mce-i-zurb-icon {
-				background: url('<?php echo plugins_url('/foundation_columns_20x20.png',__file__); ?>') no-repeat!important;
+				background: url('<?php echo plugins_url('/assets/img/foundation_columns_20x20.png',__file__); ?>') no-repeat!important;
 			}
 			</style>
 			<?php
@@ -255,18 +306,21 @@ if( foundation_columns_requirements_met() ) {
 
 	}
 
+	add_action( 'admin_head', 'foundation_columns_icon', 999 );
+
 	/**
 	 * Languages for the dialog
 	 *
-	 * @return array
+	 * @param array $mce_external_languages Existing translations
+	 * @return array Translation
 	 */
-
-	add_filter( 'mce_external_languages', 'foundation_columns_localization' );
 
 	function foundation_columns_localization( $mce_external_languages ) {
 		$mce_external_languages[ 'foundation_columns' ] = plugin_dir_path( __FILE__ ) . 'localization.php';
 		return $mce_external_languages;
 	}
+
+	add_filter( 'mce_external_languages', 'foundation_columns_localization' );
 
 }
 else {
@@ -280,7 +334,7 @@ else {
 /**
  * Throw and error upon activation if requirements are not met
  *
- * @return 
+ * @return void An error message
  */
 
 function foundation_columns_error() {
